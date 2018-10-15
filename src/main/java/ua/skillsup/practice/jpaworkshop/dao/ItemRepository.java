@@ -10,6 +10,8 @@ public interface ItemRepository {
 	void update(Item item);
 	Item getOne(long id);
 	List<Item> findAll();
+
 	Item findByTitle(String title);
+	List<Item> findByWeightGreaterThen(double wight);
 
 }

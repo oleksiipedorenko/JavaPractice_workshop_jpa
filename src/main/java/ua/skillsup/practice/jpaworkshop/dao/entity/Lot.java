@@ -1,19 +1,38 @@
 package ua.skillsup.practice.jpaworkshop.dao.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "LOT")
 public class Lot {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
 	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name = "ITEM_ID")
 	private Item item;
+
+	@ManyToOne
+	@JoinColumn(name = "OWNER_ID")
 	private User owner;
+
+	@Column(name = "LAST_UPDATE")
 	private LocalDate datePlaced;
+	@Column(name = "START_PRICE")
 	private BigDecimal startPrice;
+	@Transient
 	private User buyer;
+	@Column(name = "CURRENT_PRICE")
 	private BigDecimal currentPrice;
+	@Column(name = "DATE_END")
 	private LocalDate dateEnd;
+
 
 	public Long getId() {
 		return id;
