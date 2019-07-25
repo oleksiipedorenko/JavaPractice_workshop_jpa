@@ -5,27 +5,22 @@ import ua.skillsup.practice.jpaworkshop.dao.ItemRepository;
 import ua.skillsup.practice.jpaworkshop.dao.entity.Item;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
 import java.util.List;
 
 @Repository
 public class ItemRepositoryImpl implements ItemRepository {
 
-	private final EntityManagerFactory entityManagerFactory;
+	private final EntityManager entityManager;
 
-	public ItemRepositoryImpl(EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
+	public ItemRepositoryImpl(EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 
 	@Override
 	public long create(Item item) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.persist(item);
 		return item.getId();
 	}
@@ -42,13 +37,13 @@ public class ItemRepositoryImpl implements ItemRepository {
 
 	@Override
 	public List<Item> findAll() {
-		return entityManagerFactory.createEntityManager()
+		return entityManager
 				.createQuery("from Item", Item.class).getResultList();
 	}
 
 	@Override
 	public Item findByTitle(String title) {
-		return entityManagerFactory.createEntityManager()
+		return entityManager
 				.createQuery("from Item where title = :title", Item.class)
 				.setParameter("title", title)
 				.getSingleResult();
@@ -56,7 +51,6 @@ public class ItemRepositoryImpl implements ItemRepository {
 
 	@Override
 	public List<Item> findByWeightGreaterThen(double weight) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<Item> cq = cb.createQuery(Item.class);

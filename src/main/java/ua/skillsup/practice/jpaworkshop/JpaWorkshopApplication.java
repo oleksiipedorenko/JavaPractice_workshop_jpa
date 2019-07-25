@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ImportResource;
 import ua.skillsup.practice.jpaworkshop.dao.ItemRepository;
 import ua.skillsup.practice.jpaworkshop.dao.LotRepository;
+import ua.skillsup.practice.jpaworkshop.dao.entity.Item;
 import ua.skillsup.practice.jpaworkshop.dao.entity.Lot;
 import ua.skillsup.practice.jpaworkshop.service.AuctionService;
 
@@ -25,15 +26,23 @@ public class JpaWorkshopApplication {
 
 		ItemRepository repository = context.getBean(ItemRepository.class);
 		System.out.println(repository.findByTitle("Dinning table"));
+		Item item = new Item();
+		item.setTitle("Titleee");
+		item.setId(1112L);
+		item.setDescription("Desscccrrrrppp");
+		repository.create(item);
 
-		System.out.println(repository.findByWeightGreaterThen(0.1));
-		LotRepository lotRepository = context.getBean(LotRepository.class);
-		System.out.println(lotRepository.findAll());
 
-		List<Lot> lots = lotRepository
-				.findByUserNameAndCreationDate("Odin",
-						LocalDate.now().minusDays(1),
-						LocalDate.now().plusDays(1));
-		System.out.println(lots);
+		System.out.println(service.getAllItems());
+
+//		System.out.println(repository.findByWeightGreaterThen(0.1));
+//		LotRepository lotRepository = context.getBean(LotRepository.class);
+//		System.out.println(lotRepository.findAll());
+//
+//		List<Lot> lots = lotRepository
+//				.findByUserNameAndCreationDate("Odin",
+//						LocalDate.now().minusDays(1),
+//						LocalDate.now().plusDays(1));
+//		System.out.println(lots);
 	}
 }
