@@ -64,4 +64,6 @@ public interface AuctionService {
 	 */
 	List<LotHistory> getLotHistory(long lotId);
 
+	List<Item> getItemsByCategory(String category);
+
 }

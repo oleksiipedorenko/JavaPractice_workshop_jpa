@@ -11,5 +11,7 @@ public interface ItemRepository {
 	Item getOne(long id);
 	List<Item> findAll();
 	Item findByTitle(String title);
+	List<Item> findByWeightGreaterThen(double weight);
+	List<Item> findByCategory(String category);
 
 }

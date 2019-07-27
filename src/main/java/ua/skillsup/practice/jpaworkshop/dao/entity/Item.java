@@ -1,15 +1,33 @@
 package ua.skillsup.practice.jpaworkshop.dao.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
+//@Table(name = "ITEM")
 public class Item {
 
+	@Id
+	@Column(name = "ID")
 	private Long id;
+	@Column(name = "TITLE", nullable = false)
 	private String title;
+	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
+	@Column(name = "WIDTH")
 	private Double width;
+	@Column(name = "HEIGHT")
 	private Double height;
+	@Column(name = "WEIGHT")
 	private Double weight;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "ITEM_CATEGORY",
+			joinColumns = {@JoinColumn(name = "ITEM_ID")},
+			inverseJoinColumns = {@JoinColumn(name = "CATEGORY_ID")}
+	)
+	private Set<Category> categories;
 
 	public Long getId() {
 		return id;
@@ -57,6 +75,14 @@ public class Item {
 
 	public void setWeight(Double weight) {
 		this.weight = weight;
+	}
+
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 
 	@Override
